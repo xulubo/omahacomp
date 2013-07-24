@@ -6,11 +6,22 @@
  */
 
 
+#include "omahacomp.h"
 
 
-class HighCard : public RankingFilter {
-public:
-	HighCard() : RankingFilter(1) {}
-	bool filter(Hand& hand);
+bool HighCard::filter(Hand& hand)
+{
+	int cnt = 0;
+	int score = 0;
+	for(int i=13; i>0; i--) {
+		cnt = hand.cards[0][i] + hand.cards[1][i] +  hand.cards[2][i] + hand.cards[3][i];
+		if (cnt == 1) {
+			score <<= 4;
+			score += i;
+		}
+	}
 
-};
+	hand.rank = mRank;
+	hand.score = score;
+	return true;
+}
