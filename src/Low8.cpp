@@ -11,21 +11,22 @@
 bool Low8::filter(Hand& hand){
 
 	int cnt = 0;
-	int low8 = 0;
+	int score = 0;
 
 	for(int i=7; i>=0; i--) {
 		cnt = hand.cards[0][i] + hand.cards[1][i] +  hand.cards[2][i] + hand.cards[3][i];
 		if (cnt == 1) {
-			low8 <<= 4;
-			low8 += i == 0 ? 0xA : i+1;
+			score <<= 4;
+			score += (i+1);
 		}
 		else if (cnt > 1) {
 			return false;
 		}
 	}
 
-	if (low8 > 0x10000) {
-		hand.low8 = low8;
+	if (score > 0x10000) {
+		hand.score = score;
+		hand.low8 = (score & 0x0F) == 1 ? score + 0x09 : score;
 		return true;
 	}
 

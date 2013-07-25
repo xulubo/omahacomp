@@ -30,7 +30,7 @@ bool TwoPair::filter(Hand& hand){
 
 	if (pairs == 2) {
 		hand.rank = mRank;
-		hand.score = pairScore << 4 + singleScore;
+		hand.score = (pairScore << 4) + singleScore;
 		return true;
 	}
 

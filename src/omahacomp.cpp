@@ -112,7 +112,7 @@ void findHiAndLo(char (*pHands)[3], Hand& hi, Hand& lo) {
 				}
 			}
 
-			if (low8Filter.filter(*p)) {
+			if (low8Filter.filter(*p) && p->low8 > 0) {
 				if (lo.low8 == 0 || p->low8 < lo.low8) {
 					lo = *p;
 				}
@@ -155,26 +155,26 @@ int evaluate(char* sHandA, char* sHandB, char* sBoard) {
 	fprintf(fpOutput, "=> ");
 
 	if (hiA > hiB) {
-		fprintf(fpOutput, "HandA wins Hi (%s);\t", gFilters[hiA.rank-1]->getName());
+		fprintf(fpOutput, "HandA wins Hi (%s);     ", gFilters[hiA.rank-1]->getName());
 	}
 	else if (hiA == hiB) {
-		fprintf(fpOutput, "Split Pot Hi (%s);\t", gFilters[hiA.rank-1]->getName());
+		fprintf(fpOutput, "Split Pot Hi (%s);     ", gFilters[hiA.rank-1]->getName());
 	}
 	else {
-		fprintf(fpOutput, "HandB wins Hi (%s);\t", gFilters[hiB.rank-1]->getName());
+		fprintf(fpOutput, "HandB wins Hi (%s);     ", gFilters[hiB.rank-1]->getName());
 	}
 
-	if (loA.low8 == 0 && loB.low8 == 0) {
+	if (loA.score == 0 && loB.score == 0) {
 		fprintf(fpOutput, "No hand qualified for Low");
 	}
-	else if (loA.low8 == loB.low8) {
-		fprintf(fpOutput, "Split Pot Low (%X)", loA.low8);
+	else if (loA.score == loB.score) {
+		fprintf(fpOutput, "Split Pot Lo (%X)", loA.low8 );
 	}
-	else if (loB.low8 == 0 || (loA.low8 < loB.low8 && loA.low8 != 0) ) {
-		fprintf(fpOutput, "HandA wins Lo (%X);", loA.low8);
+	else if (loB.score == 0 || (loA.score < loB.score && loA.score != 0) ) {
+		fprintf(fpOutput, "HandA wins Lo (%X)", loA.low8);
 	}
 	else {
-		fprintf(fpOutput, "HandB wins Lo (%X);", loB.low8);
+		fprintf(fpOutput, "HandB wins Lo (%X)", loB.low8);
 	}
 
 	fprintf(fpOutput, "\n\n");

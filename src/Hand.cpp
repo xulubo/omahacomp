@@ -7,8 +7,8 @@
 // Td (10 diamonds)
 // 9s (9 spades)
 
-#define SUIT_INDEX(c) (suit_index[c - 'a'])
-#define POINT_INDEX(c) (point_index[c - '2'])
+#define SUIT_INDEX(c) (suit_index[(c) - 'a'])
+#define POINT_INDEX(c) (point_index[(c) - '2'])
 
 //mapping 'a', 'b', 'c' , 'd', 'e','f','g','h','i','j','k','l','m','n','o','p','q','r', 's'
 //to suit index
@@ -31,10 +31,10 @@ bool Hand::addCard(char *card) {
 		return false;
 	}
 
-	int suit = SUIT_INDEX(card[1]);
+	int suit = SUIT_INDEX(card[1] | 0x20);
 	int point = POINT_INDEX(card[0]);
 	if (suit == -1 || point == -1) {
-		fprintf(stderr, "illegal value\r\n");
+		fprintf(stderr, "illegal value  %s\r\n", card);
 		return false;
 	}
 
@@ -81,7 +81,7 @@ void Hand::dump() {
 
 void Hand::clear() {
 	this->rank = 0;
-	this->score = -1;
+	this->score = 0;
 	this->size = 0;
 	this->low8 = 0;
 	memset(this->cards, 0, sizeof(this->cards));

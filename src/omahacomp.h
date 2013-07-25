@@ -66,7 +66,7 @@ public:
 
 class FourOfAKind : public RankingFilter {
 public:
-	FourOfAKind() : RankingFilter(8, "4-of-a-kind") {}
+	FourOfAKind() : RankingFilter(8, "4-of-a-Kind") {}
 	bool filter(Hand& hand);
 
 };
@@ -94,7 +94,7 @@ public:
 
 class ThreeOfAKind : public RankingFilter {
 public:
-	ThreeOfAKind() : RankingFilter(4, "3-of-a-kind") {}
+	ThreeOfAKind() : RankingFilter(4, "3-of-a-Kind") {}
 	bool filter(Hand& hand);
 
 };
